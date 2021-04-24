@@ -1,0 +1,39 @@
+$spaces: 6, 8, 10, 12, 14, 16, 18, 20, 24, 26, 32, 36, 42;
+
+@mixin make-space-tokens() {
+	@each $value in $spaces {
+		--sp-#{$value}: $value;
+	}
+}
+
+@mixin make-paddings() {
+	@each $value in $spaces {
+		.p-#{$value} {
+			padding: #{$value}px;
+		}
+		.px-#{$value} {
+			padding-left: #{$value}px;
+			padding-right: #{$value}px;
+		}
+		.py-#{$value} {
+			padding-top: #{$value}px;
+			padding-bottom: #{$value}px;
+		}
+	}
+}
+
+@mixin make-margins() {
+	@each $value in $spaces {
+		.m-#{$value} {
+			margin: #{$value}px;
+		}
+		.mx-#{$value} {
+			margin-left: #{$value}px;
+			margin-right: #{$value}px;
+		}
+		.my-#{$value} {
+			margin-top: #{$value}px;
+			margin-bottom: #{$value}px;
+		}
+	}
+}

@@ -1,0 +1,6 @@
+@use "./spaces";
+@use "./typography";
+
+@include spaces.make-paddings();
+@include spaces.make-margins();
+@include typography.make-ft();

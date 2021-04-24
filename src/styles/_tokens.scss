@@ -1,0 +1,9 @@
+@use "./spaces";
+@use "./typography";
+@use "./palette";
+
+:root {
+	@include spaces.make-space-tokens();
+	@include typography.make-font-tokens();
+	@include palette.default();
+}
