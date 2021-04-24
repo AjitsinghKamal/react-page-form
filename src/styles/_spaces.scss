@@ -2,7 +2,7 @@ $spaces: 6, 8, 10, 12, 14, 16, 18, 20, 24, 26, 32, 36, 42;
 
 @mixin make-space-tokens() {
 	@each $value in $spaces {
-		--sp-#{$value}: $value;
+		--sp-#{$value}: #{$value}px;
 	}
 }
 

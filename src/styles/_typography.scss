@@ -1,19 +1,19 @@
 $sizes: 12, 14, 16, 18, 20, 24, 28, 32, 36;
-$base-font-size: list.nth($sizes, 3);
+$base-font-size: 16;
 
 $font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
 	Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 
 @mixin make-font-tokens() {
-	@each $value in $sizes {
-		--ft-#{$value}: #{$size/$base-font-size}rem;
+	@each $size in $sizes {
+		--ft-#{$size}: #{$size/$base-font-size}rem;
 	}
 	--ft-base: $base-font-size;
 	--ft-sans: $font-stack;
 }
 @mixin make-ft() {
 	@each $size in $sizes {
-		.ft-#{$sizes} {
+		.ft-#{$size} {
 			font-size: #{$size/$base-font-size}rem;
 		}
 	}
