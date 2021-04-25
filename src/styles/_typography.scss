@@ -8,8 +8,8 @@ $font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
 	@each $size in $sizes {
 		--ft-#{$size}: #{$size/$base-font-size}rem;
 	}
-	--ft-base: $base-font-size;
-	--ft-sans: $font-stack;
+	--ft-base: #{$base-font-size};
+	--ft-sans: #{$font-stack};
 }
 @mixin make-ft() {
 	@each $size in $sizes {

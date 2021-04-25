@@ -4,6 +4,7 @@
 
 :root {
 	@include spaces.make-space-tokens();
+	@include spaces.make-wh-tokens();
 	@include typography.make-font-tokens();
 	@include palette.default();
 }

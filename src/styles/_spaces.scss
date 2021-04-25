@@ -1,8 +1,21 @@
 $spaces: 6, 8, 10, 12, 14, 16, 18, 20, 24, 26, 32, 36, 42;
+$max-container-width: 1600px;
+$max-header-height: 60px;
+
+@mixin make-wh-tokens() {
+	--w-max: #{$max-container-width};
+	--h-header: #{$max-header-height};
+}
 
 @mixin make-space-tokens() {
 	@each $value in $spaces {
 		--sp-#{$value}: #{$value}px;
+	}
+	.w-full {
+		width: 100%;
+	}
+	.h-full {
+		height: 100%;
 	}
 }
 
