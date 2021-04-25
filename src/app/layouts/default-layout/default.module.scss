@@ -1,0 +1,11 @@
+.layout {
+	display: grid;
+	min-height: 100vh;
+	overflow-x: hidden;
+	grid-template-rows: var(--h-header) auto;
+	&_content {
+		padding-top: var(--sp-8);
+		padding-bottom: var(--sp-8);
+		overflow-y: auto;
+	}
+}
