@@ -2,11 +2,14 @@
 module.exports = {
 	moduleFileExtensions: ['js', 'ts', 'tsx'],
 	transform: {
-		'^.+\\.ts': 'ts-jest',
+		'^.+\\.tsx': 'ts-jest',
+	},
+	moduleNameMapper: {
+		'^.+\\.(css|scss)$': 'identity-obj-proxy',
 	},
 	globals: {
 		'ts-jest': {
-			tsconfig: './tsconfig.json',
+			babelConfig: true,
 		},
 	},
 };
