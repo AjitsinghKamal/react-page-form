@@ -50,3 +50,10 @@ $max-header-height: 60px;
 		}
 	}
 }
+
+@mixin make-rest-tokens {
+	--border-rd: 10px;
+	--border-rd-none: 0px;
+	--border-rd-full: 50%;
+	--border-rd-semi: 300px;
+}
