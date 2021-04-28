@@ -7,6 +7,7 @@ type Props = {
 	title?: string;
 	canonicals?: string[];
 	socialMeta?: Record<string, string>;
+	prefixTitleWithEnv?: boolean;
 };
 
 function makeSocialTags(metaDetails: Props['socialMeta']) {
@@ -19,15 +20,20 @@ function makeSocialTags(metaDetails: Props['socialMeta']) {
 		</>
 	);
 }
+
+const APP_TITLE = import.meta.env.VITE_APP_TITLE;
+const IS_DEV = import.meta.env.DEV;
+
 function Seo({
 	title,
 	canonicals,
 	socialMeta,
 	children,
+	prefixTitleWithEnv,
 }: PropsWithChildren<Props>) {
 	const pageTitle = useMemo(() => {
-		return `${import.meta.env.DEV && 'Dev| '}${
-			title || import.meta.env.VITE_APP_TITLE
+		return `${prefixTitleWithEnv && IS_DEV && 'Dev | '}${
+			title || APP_TITLE
 		}`;
 	}, []);
 	return (

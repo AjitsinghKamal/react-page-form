@@ -1,0 +1,50 @@
+@mixin solid-btn($fill) {
+	background: $fill;
+	color: #fff;
+}
+
+@mixin outline-btn($color) {
+	background: none;
+	color: $color;
+	box-shadow: 0 0 0 1px $color;
+}
+
+@mixin ghost-btn($color) {
+	color: $color;
+	background: none;
+}
+
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--sp-12) var(--sp-16);
+	border-radius: var(--border-rd);
+	&___solid {
+		@include solid-btn(var(--btn-color));
+	}
+	&___outline {
+		@include outline-btn(var(--btn-color));
+	}
+	&___ghost {
+		@include ghost-btn(var(--btn-color));
+	}
+	&___primary {
+		@include solid-btn(var(--primary-500));
+		&.button___outline {
+			@include outline-btn(var(--primary-500));
+		}
+		&.button___ghost {
+			@include ghost-btn(var(--primary-500));
+		}
+	}
+	&___secondary {
+		@include solid-btn(var(--grey-600));
+		&.button___outline {
+			@include outline-btn(var(--grey-600));
+		}
+		&.button___ghost {
+			@include ghost-btn(var(--grey-600));
+		}
+	}
+}
