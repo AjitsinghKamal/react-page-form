@@ -1,5 +1,5 @@
 //#region imports
-import cx from 'clsx';
+import cx from 'classnames';
 import css from './header-default.module.scss';
 //#endregion
 

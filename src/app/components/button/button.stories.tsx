@@ -1,14 +1,27 @@
 import React from 'react';
-import { Meta } from '@storybook/react';
 import Button from './button';
 
-export const Primary = () => (
-	<Button primary onClick={() => console.log('action')}>
+const Template = (args: any) => (
+	<Button onClick={() => console.log('action')} {...args}>
 		Button
 	</Button>
 );
+export const Default = Template.bind({});
 
 export default {
 	title: 'Components/Button',
 	component: Button,
-} as Meta;
+	argTypes: {
+		variant: {
+			control: {
+				type: 'radio',
+				options: ['ghost', 'solid', 'outline'],
+			},
+		},
+	},
+	args: {
+		primary: true,
+		secondary: false,
+		variant: 'solid',
+	},
+};

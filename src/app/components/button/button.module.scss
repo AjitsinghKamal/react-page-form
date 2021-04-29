@@ -18,8 +18,9 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: var(--sp-12) var(--sp-16);
+	padding: var(--sp-6) var(--sp-16);
 	border-radius: var(--border-rd);
+	font-weight: 600;
 	&___solid {
 		@include solid-btn(var(--btn-color));
 	}

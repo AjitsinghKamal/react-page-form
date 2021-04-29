@@ -1,0 +1,39 @@
+.input {
+	display: inline-block;
+	max-width: 100%;
+	margin-bottom: var(--sp-16);
+	&_field {
+		display: block;
+		border-radius: var(--border-rd);
+		border: 0;
+		box-shadow: 0 0 0 1px var(--primary-300);
+		padding: var(--sp-8) var(--sp-16);
+		transition: box-shadow 0.3s;
+		&:hover,
+		&:focus {
+			outline: 0;
+			box-shadow: 0 0 0 2px var(--primary-500);
+		}
+		&:focus {
+			background: var(--yellow-100);
+		}
+		&___error {
+			box-shadow: 0 0 0 2px var(--red-500);
+			&:hover,
+			&:focus {
+				box-shadow: 0 0 0 2px var(--red-500);
+			}
+		}
+	}
+	&_label {
+		font-size: var(--ft-14);
+		opacity: 0.8;
+		font-weight: 500;
+		display: block;
+		margin-bottom: var(--sp-8);
+	}
+	&_error {
+		font-size: var(--ft-12);
+		color: var(--red-500);
+	}
+}

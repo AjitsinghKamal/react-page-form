@@ -52,10 +52,10 @@ function Button({
 			style={
 				color ? ({ '--btn-color': color } as CSSProperties) : undefined
 			}
-			className={cx(css.button, css[`button__${variant}`], {
-				[css.button__primary]:
+			className={cx(css.button, css[`button___${variant}`], {
+				[css.button___primary]:
 					primary || (!primary && !secondary && !color),
-				[css.button__secondary]: secondary,
+				[css.button___secondary]: secondary,
 			})}
 			onClick={onClick}
 			{...restHtmlAttributes}

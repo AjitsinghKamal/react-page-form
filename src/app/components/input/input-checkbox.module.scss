@@ -1,0 +1,36 @@
+.checkbox {
+	display: inline-flex;
+	align-items: center;
+	&_input {
+		visibility: none;
+		height: 1px;
+		width: 1px;
+	}
+	&_field {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 20px;
+		height: 20px;
+		color: var(--primary-500);
+		box-shadow: 0 0 0 2px;
+		border-radius: var(--border-rd-sm);
+		margin-right: var(--sp-12);
+		cursor: pointer;
+		&_icon {
+			width: 75%;
+			height: 75%;
+			stroke-width: 4;
+			opacity: 0;
+			transition: opacity 0.3s;
+		}
+		&:not(.checkbox_field___checked):hover {
+			.checkbox_field_icon {
+				opacity: 0.4;
+			}
+		}
+		&___checked .checkbox_field_icon {
+			opacity: 1;
+		}
+	}
+}

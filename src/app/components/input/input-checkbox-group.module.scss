@@ -1,0 +1,11 @@
+.checkboxGroup {
+	display: flex;
+	align-items: center;
+	&___column {
+		flex-direction: column;
+		align-items: flex-start;
+		.checkboxGroup_field {
+			margin-bottom: var(--sp-16);
+		}
+	}
+}
