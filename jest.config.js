@@ -1,15 +1,29 @@
 // jest.config.js
 module.exports = {
-	moduleFileExtensions: ['js', 'ts', 'tsx'],
+	preset: 'ts-jest',
 	transform: {
-		'^.+\\.tsx': 'ts-jest',
+		'.+\\.ts[x]$': 'ts-jest',
 	},
-	moduleNameMapper: {
-		'^.+\\.(css|scss|svg|png|jpg)$': 'identity-obj-proxy',
-	},
+	moduleFileExtensions: ['js', 'ts', 'tsx'],
 	globals: {
 		'ts-jest': {
-			babelConfig: true,
+			babelConfig: {
+				presets: [
+					[
+						'@babel/preset-env',
+						{
+							targets: {
+								node: 'current',
+							},
+						},
+					],
+					'babel-preset-vite',
+				],
+			},
 		},
+	},
+	moduleNameMapper: {
+		'^.+\\.(css|scss|png|jpg)$': 'identity-obj-proxy',
+		'\\.svg$': '<rootDir>/__mocks__/svgr.ts',
 	},
 };
