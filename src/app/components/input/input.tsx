@@ -11,7 +11,7 @@ export type Props = {
 	defaultValue?: string;
 	label?: ReactNode;
 	error?: ReactNode | boolean;
-	onChange?: <K>(T: K) => void;
+	onChange?: ({ name, value }: { name: string; value: string }) => void;
 };
 
 function Input({

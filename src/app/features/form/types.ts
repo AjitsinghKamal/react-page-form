@@ -1,3 +1,4 @@
+import { Dispatch } from 'react';
 import type { CheckboxGroupProp } from 'app/components';
 
 export enum ResponsesTypeEnum {
@@ -17,3 +18,22 @@ export interface Question {
 	next?: string | NextCallback;
 	placeholder?: string;
 }
+
+export type State = {
+	questionFlow: Record<string, string>;
+	questionFlowSequence: string[];
+	inView: string;
+};
+
+export type Action =
+	| {
+			type: 'append';
+			key: string;
+			payload: Record<string, string>;
+	  }
+	| {
+			type: 'update';
+			payload: Record<string, string>;
+	  };
+
+export type ReducerDispatch = Dispatch<Action>;

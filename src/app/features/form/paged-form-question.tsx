@@ -1,21 +1,41 @@
 //#region imports
 import cx from 'classnames';
-
-import { Question, ResponsesTypeEnum } from './types';
-import { Input, CheckboxGroup } from 'app/components';
+import { FormEvent } from 'react';
+import { Question, ResponsesTypeEnum, ReducerDispatch } from './types';
+import {
+	Input,
+	CheckboxGroup,
+	Button,
+	CheckboxGroupProp,
+	InputProps,
+} from 'app/components';
 
 import css from './paged-form-question.module.scss';
 //#endregion
 
 type Props = {
+	dispatch: ReducerDispatch;
 	questionData?: Question;
-	onChange: <K>(T: K) => void;
+	onSubmit: () => void;
 };
 
-function PagedFormQuestion({ questionData, onChange }: Props) {
+function PagedFormQuestion({ questionData, dispatch, onSubmit }: Props) {
+	const onChange = () => {};
+	const onTextInputChange: InputProps['onChange'] = ({ name, value }) => {
+		dispatch({
+			type: 'update',
+			payload: {
+				[name]: value,
+			},
+		});
+	};
+	const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		onSubmit();
+	};
 	return questionData ? (
 		<div className={cx('flex', css.pagedForm)}>
-			<form>
+			<form onSubmit={handleFormSubmit}>
 				<h1 className={cx('my-24', css.pagedForm_ques)}>
 					{questionData.question}
 				</h1>
@@ -30,9 +50,10 @@ function PagedFormQuestion({ questionData, onChange }: Props) {
 					<Input
 						placeholder={questionData.placeholder || ''}
 						name={questionData.key}
-						onChange={onChange}
+						onChange={onTextInputChange}
 					/>
 				)}
+				<Button type="submit">Submit</Button>
 			</form>
 		</div>
 	) : null;

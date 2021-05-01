@@ -2,7 +2,7 @@
 import { useMemo, useEffect, useRef, useReducer } from 'react';
 import cx from 'classnames';
 
-import { Question } from './types';
+import { Question, State, Action } from './types';
 import PagedFormQuestion from './paged-form-question';
 
 import css from './paged-form.module.scss';
@@ -13,22 +13,6 @@ type IterableQuestionMap = Map<string, Question>;
 type Props = {
 	questions: QuestionList;
 };
-type State = {
-	questionFlow: Record<string, string>;
-	questionFlowSequence: string[];
-	inView: string;
-};
-
-type Action =
-	| {
-			type: 'append';
-			key: string;
-			payload: Record<string, string>;
-	  }
-	| {
-			type: 'update';
-			payload: Record<string, string>;
-	  };
 
 function isKey(next: Question['next']): next is string {
 	return typeof next === 'string';
@@ -78,8 +62,6 @@ function PagedForm({ questions }: Props) {
 		[]
 	);
 
-	const onResponse = () => {};
-
 	const presentNext = () => {
 		if (!state.inView || !iterableQuestions.get(state.inView)?.next) {
 			return null;
@@ -104,6 +86,10 @@ function PagedForm({ questions }: Props) {
 		}
 	};
 
+	const shouldSubmitResponse = () => {
+		presentNext();
+	};
+
 	useEffect(() => {
 		dispatch({
 			type: 'append',
@@ -119,7 +105,8 @@ function PagedForm({ questions }: Props) {
 			{state.questionFlowSequence.map((data) => (
 				<PagedFormQuestion
 					questionData={iterableQuestions.get(data)}
-					onChange={onResponse}
+					dispatch={dispatch}
+					onSubmit={shouldSubmitResponse}
 				/>
 			))}
 		</div>
