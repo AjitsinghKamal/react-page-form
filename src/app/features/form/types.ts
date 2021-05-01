@@ -1,10 +1,19 @@
-export type ResponsesType = 'SHORT_TEXT' | 'LONG_TEXT' | 'CHOICE' | 'EMAIL';
+import type { CheckboxGroupProp } from 'app/components';
+
+export enum ResponsesTypeEnum {
+	SHORT_TEXT = 'SHORT_TEXT',
+	LONG_TEXT = 'LONG_TEXT',
+	SINGLE_CHOICE = 'SINGLE_CHOICE',
+	EMAIL = 'EMAIL',
+}
+
 export type NextCallback = (T: string) => string;
 
 export interface Question {
-	id: string;
-	responseType: ResponsesType;
+	key: string;
+	responseType: ResponsesTypeEnum;
 	question: string;
-	response: string;
-	next: NextCallback;
+	choices?: CheckboxGroupProp['fields'];
+	next?: string | NextCallback;
+	placeholder?: string;
 }

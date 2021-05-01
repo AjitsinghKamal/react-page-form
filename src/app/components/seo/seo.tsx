@@ -29,7 +29,7 @@ function Seo({
 	canonicals,
 	socialMeta,
 	children,
-	prefixTitleWithEnv,
+	prefixTitleWithEnv = true,
 }: PropsWithChildren<Props>) {
 	const pageTitle = useMemo(() => {
 		return `${prefixTitleWithEnv && IS_DEV && 'Dev | '}${

@@ -1,7 +1,7 @@
 //#region imports
 import { Suspense } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import cx from 'clsx';
+import cx from 'classnames';
 
 import { QuestionairePage, AboutPage } from 'app/pages';
 import { HeaderDefault } from 'app/components';
@@ -13,18 +13,16 @@ function DefaultLayout() {
 		<div className={css.layout}>
 			<HeaderDefault />
 			<Suspense fallback={<div></div>}>
-				<div className={cx('container', css.layout_content)}>
-					<Switch>
-						<Route
-							path={QuestionairePage.path}
-							component={QuestionairePage.component}
-						/>
-						<Route
-							path={AboutPage.path}
-							component={AboutPage.component}
-						/>
-					</Switch>
-				</div>
+				<Switch>
+					<Route
+						path={QuestionairePage.path}
+						component={QuestionairePage.component}
+					/>
+					<Route
+						path={AboutPage.path}
+						component={AboutPage.component}
+					/>
+				</Switch>
 			</Suspense>
 		</div>
 	);
