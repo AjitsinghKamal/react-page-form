@@ -1,6 +1,10 @@
 @mixin solid-btn($fill) {
 	background: $fill;
 	color: #fff;
+	transition: filter 0.3s;
+	&:hover {
+		filter: brightness(0.9);
+	}
 }
 
 @mixin outline-btn($color) {
@@ -14,6 +18,12 @@
 	background: none;
 }
 
+@mixin disabled($color) {
+	cursor: not-allowed;
+	opacity: 0.8;
+	@include outline-btn($color);
+}
+
 .button {
 	display: inline-flex;
 	align-items: center;
@@ -21,6 +31,9 @@
 	padding: var(--sp-6) var(--sp-16);
 	border-radius: var(--border-rd);
 	font-weight: 600;
+	&___large {
+		padding: var(--sp-16) var(--sp-24);
+	}
 	&___solid {
 		@include solid-btn(var(--btn-color));
 	}
@@ -30,6 +43,13 @@
 	&___ghost {
 		@include ghost-btn(var(--btn-color));
 	}
+	&___disabled {
+		@include disabled(var(--btn-color));
+	}
+	&___loading {
+		cursor: not-allowed;
+		opacity: 0.8;
+	}
 	&___primary {
 		@include solid-btn(var(--primary-500));
 		&.button___outline {
@@ -37,6 +57,9 @@
 		}
 		&.button___ghost {
 			@include ghost-btn(var(--primary-500));
+		}
+		&.button___disabled {
+			@include disabled(var(--primary-500));
 		}
 	}
 	&___secondary {
@@ -46,6 +69,9 @@
 		}
 		&.button___ghost {
 			@include ghost-btn(var(--grey-600));
+		}
+		&.button___disabled {
+			@include disabled(var(--grey-600));
 		}
 	}
 }

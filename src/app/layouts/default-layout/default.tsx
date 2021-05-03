@@ -1,5 +1,5 @@
 //#region imports
-import { Suspense } from 'react';
+import { Suspense, HTMLAttributes } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import cx from 'classnames';
 
@@ -8,9 +8,11 @@ import { HeaderDefault } from 'app/components';
 import css from './default.module.scss';
 //#endregion
 
-function DefaultLayout() {
+type Props = {};
+
+function DefaultLayout({ className }: Props & HTMLAttributes<HTMLDivElement>) {
 	return (
-		<div className={css.layout}>
+		<div className={cx(css.layout, className)}>
 			<HeaderDefault />
 			<Suspense fallback={<div></div>}>
 				<Switch>

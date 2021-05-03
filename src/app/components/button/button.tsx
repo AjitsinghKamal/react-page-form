@@ -1,7 +1,14 @@
 //#region imports
 import cx from 'classnames';
-import { PropsWithChildren, CSSProperties } from 'react';
+import {
+	PropsWithChildren,
+	CSSProperties,
+	ButtonHTMLAttributes,
+	MouseEvent,
+} from 'react';
+
 import css from './button.module.scss';
+import { ReactComponent as Loader } from 'src/assets/svgs/pulse.svg';
 //#endregion
 
 type RestrictedColor =
@@ -25,7 +32,7 @@ type Props = {
 	/**
 	 * Callback on button click
 	 */
-	onClick: <T, K>(P: T) => K | void;
+	onClick?: (E: MouseEvent<HTMLButtonElement>) => void;
 	/**
 	 * Button supports multiple variants
 	 * Default variant set is solid
@@ -36,31 +43,53 @@ type Props = {
 	 * when loading also disables the button
 	 */
 	loading?: boolean;
+	/**
+	 * disables button interaction
+	 */
+	disabled?: boolean;
+	size?: 'small' | 'large';
 } & RestrictedColor;
 
 function Button({
 	children,
 	onClick,
 	color,
-	variant = 'solid',
 	primary,
 	secondary,
+	loading,
+	disabled,
+	size,
+	variant = 'solid',
+	className,
 	...restHtmlAttributes
-}: PropsWithChildren<Props>) {
+}: PropsWithChildren<Props> & ButtonHTMLAttributes<HTMLButtonElement>) {
+	const onClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
+		(!loading || !disabled) && onClick && onClick(e);
+	};
 	return (
 		<button
 			style={
 				color ? ({ '--btn-color': color } as CSSProperties) : undefined
 			}
-			className={cx(css.button, css[`button___${variant}`], {
-				[css.button___primary]:
-					primary || (!primary && !secondary && !color),
-				[css.button___secondary]: secondary,
-			})}
-			onClick={onClick}
+			className={cx(
+				css.button,
+				css[`button___${variant}`],
+				{
+					[css.button___primary]:
+						primary || (!primary && !secondary && !color),
+					[css.button___secondary]: secondary,
+					[css[`button___${size}`]]: size,
+					[css.button___disabled]: disabled,
+					[css.button___loading]: loading,
+				},
+				className
+			)}
+			aria-disabled={disabled}
+			onClick={onClickHandler}
 			{...restHtmlAttributes}
 		>
 			{children}
+			{loading && <Loader />}
 		</button>
 	);
 }

@@ -1,5 +1,11 @@
 //#region imports
-import { ReactNode, FormEvent, useState, useEffect } from 'react';
+import {
+	ReactNode,
+	FormEvent,
+	useState,
+	useEffect,
+	HTMLAttributes,
+} from 'react';
 import cx from 'classnames';
 import css from './input.module.scss';
 //#endregion
@@ -11,6 +17,7 @@ export type Props = {
 	defaultValue?: string;
 	label?: ReactNode;
 	error?: ReactNode | boolean;
+	type?: string;
 	onChange?: ({ name, value }: { name: string; value: string }) => void;
 };
 
@@ -22,6 +29,7 @@ function Input({
 	error,
 	defaultValue,
 	onChange,
+	type = 'text',
 	...restHtmlAttributes
 }: Props) {
 	const [state, setState] = useState('');
@@ -50,6 +58,7 @@ function Input({
 				name={name}
 				placeholder={placeholder}
 				onChange={_onChangeHandler}
+				type={type}
 				{...restHtmlAttributes}
 			/>
 			{error && <small className={css.input_error}>{error}</small>}

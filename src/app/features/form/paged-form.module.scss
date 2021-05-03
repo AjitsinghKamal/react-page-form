@@ -1,2 +1,9 @@
 .paged {
+	--page-h: calc(100vh - var(--h-header));
+	position: relative;
+	height: var(--page-h);
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0;
+	scroll-snap-type: y mandatory;
 }

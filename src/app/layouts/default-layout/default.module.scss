@@ -8,7 +8,9 @@
 		max-width: var(--w-max);
 		width: 100%;
 		margin: 0 auto;
-		padding-left: 32px;
-		padding-right: 32px;
+		&:not(:global(.clear)) {
+			padding-left: 32px;
+			padding-right: 32px;
+		}
 	}
 }

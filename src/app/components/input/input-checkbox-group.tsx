@@ -21,7 +21,15 @@ export type Props = {
 	direction?: 'row' | 'column';
 	checked?: boolean[] | CheckboxField[];
 	prefixLabel?: boolean;
-	onChange?: <K>(T: K) => void;
+	onChange?: ({
+		state,
+		change,
+		groupName,
+	}: {
+		state: GroupState;
+		change: OnChangeResponse;
+		groupName: string;
+	}) => void;
 };
 
 function isCheckboxField(
@@ -83,6 +91,7 @@ function InputCheckboxGroup({
 			: handleStateUpdateForMultiSelect(res);
 		onChange &&
 			onChange({
+				groupName: name,
 				state: nextState,
 				change: res,
 			});
@@ -114,7 +123,7 @@ function InputCheckboxGroup({
 							label={fieldLabel}
 							prefixLabel={prefixLabel}
 							key={fieldName}
-							name={index}
+							name={fieldName}
 							checked={state[fieldName]}
 							onChange={_onChangeHandler}
 							className={css.checkboxGroup_field}

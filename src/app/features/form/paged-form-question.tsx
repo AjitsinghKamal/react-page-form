@@ -1,6 +1,7 @@
 //#region imports
+import { FormEvent, useRef, useLayoutEffect, useMemo } from 'react';
 import cx from 'classnames';
-import { FormEvent } from 'react';
+
 import { Question, ResponsesTypeEnum, ReducerDispatch } from './types';
 import {
 	Input,
@@ -10,6 +11,7 @@ import {
 	InputProps,
 } from 'app/components';
 
+import { ReactComponent as EntrIcon } from 'src/assets/svgs/enter.svg';
 import css from './paged-form-question.module.scss';
 //#endregion
 
@@ -17,10 +19,38 @@ type Props = {
 	dispatch: ReducerDispatch;
 	questionData?: Question;
 	onSubmit: () => void;
+	response?: string | number;
+	isInView?: boolean;
 };
 
-function PagedFormQuestion({ questionData, dispatch, onSubmit }: Props) {
-	const onChange = () => {};
+function isChoiceType(choice: ResponsesTypeEnum): boolean {
+	return [
+		ResponsesTypeEnum.SINGLE_CHOICE,
+		ResponsesTypeEnum.MULTI_CHOICE,
+	].includes(choice);
+}
+
+function PagedFormQuestion({
+	questionData,
+	dispatch,
+	onSubmit,
+	response,
+	isInView,
+}: Props) {
+	const sectionRef = useRef<HTMLElement>(null);
+	const shouldEnableForm = useMemo(
+		() => response && !!String(response).trim(),
+		[response]
+	);
+
+	const onChange: CheckboxGroupProp['onChange'] = ({ change, groupName }) => {
+		dispatch({
+			type: 'update',
+			payload: {
+				[groupName]: change.name,
+			},
+		});
+	};
 	const onTextInputChange: InputProps['onChange'] = ({ name, value }) => {
 		dispatch({
 			type: 'update',
@@ -31,31 +61,66 @@ function PagedFormQuestion({ questionData, dispatch, onSubmit }: Props) {
 	};
 	const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		onSubmit();
+		shouldEnableForm && onSubmit();
 	};
+
+	useLayoutEffect(() => {
+		isInView &&
+			sectionRef.current &&
+			sectionRef.current.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+				inline: 'nearest',
+			});
+	}, [isInView]);
+
 	return questionData ? (
-		<div className={cx('flex', css.pagedForm)}>
-			<form onSubmit={handleFormSubmit}>
-				<h1 className={cx('my-24', css.pagedForm_ques)}>
+		<section
+			ref={sectionRef}
+			className={cx(css.pagedForm, {
+				[css.pagedForm__active]: isInView,
+			})}
+		>
+			<form onSubmit={handleFormSubmit} className={css.pagedForm_form}>
+				<h1
+					className={cx('my-24', css.pagedForm_ques)}
+					aria-label={questionData.question}
+				>
 					{questionData.question}
 				</h1>
-				{questionData.responseType ===
-				ResponsesTypeEnum.SINGLE_CHOICE ? (
+				{isChoiceType(questionData.responseType) ? (
 					<CheckboxGroup
 						name={questionData.key}
 						fields={questionData.choices || []}
 						onChange={onChange}
+						singleSelect={
+							questionData.responseType ===
+							ResponsesTypeEnum.SINGLE_CHOICE
+						}
 					/>
 				) : (
 					<Input
 						placeholder={questionData.placeholder || ''}
 						name={questionData.key}
 						onChange={onTextInputChange}
+						type={
+							questionData.responseType === ResponsesTypeEnum.NUM
+								? 'number'
+								: 'text'
+						}
 					/>
 				)}
-				<Button type="submit">Submit</Button>
+				<Button
+					type="submit"
+					size="large"
+					className="my-24"
+					disabled={!shouldEnableForm}
+				>
+					{questionData.next ? 'Next' : 'Submit'}
+					<EntrIcon className={css.pagedForm_ques_btn_icon} />
+				</Button>
 			</form>
-		</div>
+		</section>
 	) : null;
 }
 

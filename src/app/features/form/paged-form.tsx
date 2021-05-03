@@ -33,11 +33,17 @@ function FormReducer(state: State, action: Action): State {
 					...state.questionFlowSequence,
 					action.key,
 				],
+				inView: action.key,
 			};
 		case 'update':
 			return {
 				...state,
 				questionFlow: { ...state.questionFlow, ...action.payload },
+			};
+		case 'jump':
+			return {
+				...state,
+				inView: action.payload,
 			};
 		default:
 			return state;
@@ -104,6 +110,9 @@ function PagedForm({ questions }: Props) {
 		<div className={cx(css.paged)}>
 			{state.questionFlowSequence.map((data) => (
 				<PagedFormQuestion
+					key={`form_${data}`}
+					isInView={data === state.inView}
+					response={state.questionFlow[data]}
 					questionData={iterableQuestions.get(data)}
 					dispatch={dispatch}
 					onSubmit={shouldSubmitResponse}

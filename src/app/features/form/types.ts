@@ -5,10 +5,12 @@ export enum ResponsesTypeEnum {
 	SHORT_TEXT = 'SHORT_TEXT',
 	LONG_TEXT = 'LONG_TEXT',
 	SINGLE_CHOICE = 'SINGLE_CHOICE',
+	MULTI_CHOICE = 'MULTI_CHOICE',
 	EMAIL = 'EMAIL',
+	NUM = 'NUM',
 }
 
-export type NextCallback = (T: string) => string;
+export type NextCallback = <K>(T: K) => string;
 
 export interface Question {
 	key: string;
@@ -20,7 +22,7 @@ export interface Question {
 }
 
 export type State = {
-	questionFlow: Record<string, string>;
+	questionFlow: Record<string, string | number>;
 	questionFlowSequence: string[];
 	inView: string;
 };
@@ -29,11 +31,15 @@ export type Action =
 	| {
 			type: 'append';
 			key: string;
-			payload: Record<string, string>;
+			payload: Record<string, string | number>;
 	  }
 	| {
 			type: 'update';
-			payload: Record<string, string>;
+			payload: Record<string, string | number>;
+	  }
+	| {
+			type: 'jump';
+			payload: string;
 	  };
 
 export type ReducerDispatch = Dispatch<Action>;
