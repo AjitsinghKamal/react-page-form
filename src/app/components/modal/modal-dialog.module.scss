@@ -1,0 +1,33 @@
+.dialog {
+	background: #fff;
+	border-radius: var(--border-rd);
+	max-width: 90%;
+	width: 600px;
+	transform: scale(0.9);
+	animation: appear 0.2s forwards;
+	&_header {
+		justify-content: space-between;
+		min-height: 60px;
+		&_title {
+			flex: 1;
+			font-size: var(--ft-18);
+			font-weight: 600;
+		}
+	}
+	&_footer {
+		justify-content: flex-end;
+	}
+	&_icon {
+		&___close {
+			opacity: 0.5;
+		}
+	}
+	@keyframes appear {
+		70% {
+			transform: scale(1.1);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+}
