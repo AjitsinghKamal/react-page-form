@@ -1,24 +1,14 @@
 // jest.config.js
 module.exports = {
-	preset: 'ts-jest',
+	preset: 'ts-jest/presets/default-esm',
 	transform: {
 		'.+\\.ts[x]$': 'ts-jest',
 	},
-	moduleFileExtensions: ['js', 'ts', 'tsx'],
 	globals: {
 		'ts-jest': {
+			useESM: true,
 			babelConfig: {
-				presets: [
-					[
-						'@babel/preset-env',
-						{
-							targets: {
-								node: 'current',
-							},
-						},
-					],
-					'babel-preset-vite',
-				],
+				presets: ['babel-preset-vite'],
 			},
 		},
 	},
@@ -28,4 +18,6 @@ module.exports = {
 		'^src(.*)$': '<rootDir>/src$1',
 		'^app/components': '<rootDir>/src/app/components/',
 	},
+	resetMocks: true,
+	testEnvironment: 'jsdom',
 };
