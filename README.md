@@ -1,3 +1,76 @@
+## Development
+
+The project uses `vite` for development which is an `esm` based tooling system.
+
+To setup;
+
+```
+> clone repo
+
+> yarn OR npm i
+
+> yarn dev OR npm run dev
+```
+
+Project will be up and running on `localhost`
+
+## Testing
+
+Tests are setup with `jest` and `testing-library`. Since the project is written with TypeScript, `ts-jest` is used to setup tests along with `jest`. Instead of major release version for both `jest` and `ts-jest`, the `next:release` version is used to support es modules while testing.
+
+To run tests;
+
+```
+> yarn test OR
+
+> yarn test:watch
+```
+
+## Storybook
+
+All components are built around a very simple design language and includes a story for easily viewing them on a storybook.
+
+To run storybook;
+
+```
+> yarn storybook
+```
+
+## Structure
+
+```
+├── src
+│   ├── app
+│   │    ├── apis
+│   │    ├── components
+│	│	 ├── features
+│	│	 ├── hooks
+│	│	 ├── layouts
+│	│	 ├── pages
+│	│	 ├── utilities
+│	│    └── index.tsx
+│   ├── assets
+│   │     ├── illustrations
+│   │     └── svgs
+│   ├── styles
+│   │     └── **/*.scss
+│   └── types
+│        └── **/*.d.ts
+│
+├── dist (or build)
+├── node_modules
+├── __mocks__
+├── .storybook
+├── index.html
+├── .env
+├── vite.config.ts
+├── jest.config.js
+├── README.md
+├── package.json
+├── tsconfig.json
+└── .gitignore
+```
+
 ### Dependencies
 
 **App**
@@ -22,8 +95,6 @@
 
 > Required to deal with ESM in jest test
 
--   `babel-jest`
-    > Babel Core required to setup babel for jest
 -   `@babel/core`
 -   `@babel/preset-env`
 

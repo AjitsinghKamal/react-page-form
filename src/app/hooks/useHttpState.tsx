@@ -56,6 +56,31 @@ function Reducer(state: HttpRequestState, action: Action): HttpRequestState {
 			return state;
 	}
 }
+
+/**
+ * A specialized hook for managing fetch responses in component state
+ *
+ * @returns
+ * {
+ *  response
+ *  status
+ *  error
+ * }
+ *
+ * [response] Response from a successful fetch request.
+ *
+ * [status] Identifier for tracking the current state of fetch request
+ * can be
+ * - 'WAITING', for request in progress. Useful for showing loading indicators.
+ * - 'DONE', for request successful and response recieved.
+ * - 'ERROR', request failed.
+ * - null, request not initialised yet.
+ *
+ * [error] Returns an object with {statusCode, response}
+ *
+ * @returns dispatch - state modifier
+ *
+ */
 const useHttpState = () => {
 	const [responseState, dispatch] = useReducer(Reducer, initialState);
 
