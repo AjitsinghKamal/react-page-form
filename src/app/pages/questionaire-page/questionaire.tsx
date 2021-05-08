@@ -123,6 +123,7 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 				) : (
 					<PagedForm
 						title="Find my Plan"
+						persistData="ques_1"
 						questions={formQuestions}
 						onFormSubmit={submitQuestionaire}
 						onFormReset={shouldResetForm}

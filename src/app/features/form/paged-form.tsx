@@ -44,8 +44,26 @@ type Props = {
 	 * callback for end form submit
 	 */
 	onFormSubmit: (T: State['questionFlow']) => void;
+	/**
+	 * callback for form reset
+	 */
 	onFormReset?: () => void;
+	/**
+	 * Any errors!
+	 *
+	 * Generally the parent component would communicate
+	 * with api services. This prop allows you to pass any custom errors
+	 * for form fields.
+	 *
+	 * should be an object with key as one of the question key
+	 * to associate the error with.
+	 */
 	errors?: RequestError;
+	/**
+	 * form data can be persisted to localStorage and will use
+	 * this prop value as key
+	 */
+	persistData?: string;
 };
 
 function isKey(next: Question['next']): next is string {
@@ -161,9 +179,18 @@ function PagedForm({
 	errors,
 	onFormSubmit,
 	onFormReset,
+	persistData,
 	contentWidth = '600px',
 }: Props) {
-	const [state, dispatch] = useReducer(FormReducer, initialState);
+	const [state, dispatch] = useReducer(
+		FormReducer,
+		initialState,
+		(initialState) => {
+			const hasStoredData =
+				persistData && localStorage.getItem(persistData);
+			return hasStoredData ? JSON.parse(hasStoredData) : initialState;
+		}
+	);
 	const quesRef = useRef<HTMLDivElement>(null);
 	const observerRef = useRef<IntersectionObserver>();
 	/**
@@ -346,6 +373,10 @@ function PagedForm({
 			observerRef.current?.disconnect();
 		};
 	}, []);
+
+	useEffect(() => {
+		persistData && localStorage.setItem(persistData, JSON.stringify(state));
+	}, [JSON.stringify(state)]);
 
 	return (
 		<div
