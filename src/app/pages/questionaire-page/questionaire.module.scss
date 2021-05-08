@@ -1,5 +1,11 @@
 .questionaire {
+	--container: 50%;
 	overflow: hidden;
-	background-color: #e3eeff;
-	background: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+	background-color: var(--blue-200);
+	background: linear-gradient(
+		to top,
+		var(--purple-200) 0%,
+		var(--blue-200) 99%,
+		var(--blue-200) 100%
+	);
 }

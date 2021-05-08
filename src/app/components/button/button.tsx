@@ -5,6 +5,7 @@ import {
 	CSSProperties,
 	ButtonHTMLAttributes,
 	MouseEvent,
+	ReactNode,
 } from 'react';
 
 import css from './button.module.scss';
@@ -48,6 +49,7 @@ type Props = {
 	 */
 	disabled?: boolean;
 	size?: 'small' | 'large';
+	icon?: ReactNode;
 } & RestrictedColor;
 
 function Button({
@@ -61,10 +63,11 @@ function Button({
 	size,
 	variant = 'solid',
 	className,
+	icon = null,
 	...restHtmlAttributes
 }: PropsWithChildren<Props> & ButtonHTMLAttributes<HTMLButtonElement>) {
 	const onClickHandler = (e: MouseEvent<HTMLButtonElement>) => {
-		(!loading || !disabled) && onClick && onClick(e);
+		!loading && !disabled && onClick && onClick(e);
 	};
 	return (
 		<button
@@ -79,7 +82,6 @@ function Button({
 						primary || (!primary && !secondary && !color),
 					[css.button___secondary]: secondary,
 					[css[`button___${size}`]]: size,
-					[css.button___disabled]: disabled,
 					[css.button___loading]: loading,
 				},
 				className
@@ -89,7 +91,11 @@ function Button({
 			{...restHtmlAttributes}
 		>
 			{children}
-			{loading && <Loader />}
+			{(loading || icon) && (
+				<span className={css.button__icon}>
+					{loading ? <Loader /> : icon}
+				</span>
+			)}
 		</button>
 	);
 }

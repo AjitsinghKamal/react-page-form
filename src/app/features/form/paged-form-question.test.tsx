@@ -1,14 +1,6 @@
-/**
- * @jest-environment jsdom
- */
-
 //#region imports
-import {
-	render,
-	fireEvent,
-	waitFor,
-	getByLabelText,
-} from '@testing-library/react';
+import { jest } from '@jest/globals';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 

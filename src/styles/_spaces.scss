@@ -49,6 +49,15 @@ $max-header-height: 60px;
 			margin-bottom: #{$value}px;
 		}
 	}
+	.ml-auto {
+		margin-left: auto;
+	}
+	.mr-auto {
+		margin-right: auto;
+	}
+	.m-auto {
+		margin: 0 auto;
+	}
 }
 
 @mixin make-rest-tokens {

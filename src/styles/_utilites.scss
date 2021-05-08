@@ -10,6 +10,14 @@
 	align-items: center;
 }
 
+.rotate___up {
+	transform: rotate(-90deg);
+}
+
+.rotate___down {
+	transform: rotate(90deg);
+}
+
 .container {
 	max-width: spaces.$max-container-width;
 	width: 100%;

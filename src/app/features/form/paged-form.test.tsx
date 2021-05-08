@@ -1,14 +1,6 @@
-/**
- * @jest-environment jsdom
- */
-
 //#region imports
-import {
-	render,
-	fireEvent,
-	waitFor,
-	getByLabelText,
-} from '@testing-library/react';
+import { jest } from '@jest/globals';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -18,6 +10,7 @@ import { ResponsesTypeEnum } from './types';
 
 test('Form shows next question in sequence', async () => {
 	Element.prototype.scrollIntoView = jest.fn();
+	const mockSubmit = jest.fn();
 	const questionsToTest = [
 		{
 			key: 'first',
@@ -33,7 +26,7 @@ test('Form shows next question in sequence', async () => {
 		},
 	];
 	const { getByRole, getByText, getByPlaceholderText } = render(
-		<PagedForm questions={questionsToTest} />
+		<PagedForm questions={questionsToTest} onFormSubmit={mockSubmit} />
 	);
 	fireEvent.change(getByPlaceholderText('first'), { target: { value: 't' } });
 	fireEvent.click(getByRole('button', { name: 'Next' }));

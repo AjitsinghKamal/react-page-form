@@ -1,0 +1,21 @@
+.item {
+	display: flex;
+	background: var(--grey-100);
+	border-radius: var(--border-rd);
+	justify-content: space-between;
+	&_type {
+		font-weight: 600;
+		text-transform: capitalize;
+	}
+	&_amount {
+		font-weight: 600;
+		&:before {
+			content: '€';
+			font-size: 0.875rem;
+			padding-right: 4px;
+		}
+	}
+	&_duration {
+		text-transform: lowercase;
+	}
+}

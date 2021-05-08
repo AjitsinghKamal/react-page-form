@@ -21,6 +21,8 @@ type Props = {
 	onSubmit: () => void;
 	response?: string | number;
 	isInView?: boolean;
+	isSubmitting?: boolean;
+	isReadonly?: boolean;
 };
 
 function isChoiceType(choice: ResponsesTypeEnum): boolean {
@@ -36,10 +38,13 @@ function PagedFormQuestion({
 	onSubmit,
 	response,
 	isInView,
+	isSubmitting,
+	isReadonly,
 }: Props) {
 	const sectionRef = useRef<HTMLElement>(null);
 	const shouldEnableForm = useMemo(
-		() => response && !!String(response).trim(),
+		() =>
+			response !== undefined && !!String(response).trim() && !isReadonly,
 		[response]
 	);
 
@@ -65,6 +70,7 @@ function PagedFormQuestion({
 	};
 
 	useLayoutEffect(() => {
+		// Scroll next question into view
 		isInView &&
 			sectionRef.current &&
 			sectionRef.current.scrollIntoView({
@@ -81,7 +87,10 @@ function PagedFormQuestion({
 				[css.pagedForm__active]: isInView,
 			})}
 		>
-			<form onSubmit={handleFormSubmit} className={css.pagedForm_form}>
+			<form
+				onSubmit={handleFormSubmit}
+				className={cx('px-12', css.pagedForm_form)}
+			>
 				<h1
 					className={cx('my-24', css.pagedForm_ques)}
 					aria-label={questionData.question}
@@ -115,9 +124,10 @@ function PagedFormQuestion({
 					size="large"
 					className="my-24"
 					disabled={!shouldEnableForm}
+					loading={isSubmitting}
+					icon={<EntrIcon />}
 				>
 					{questionData.next ? 'Next' : 'Submit'}
-					<EntrIcon className={css.pagedForm_ques_btn_icon} />
 				</Button>
 			</form>
 		</section>

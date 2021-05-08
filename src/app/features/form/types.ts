@@ -24,7 +24,11 @@ export interface Question {
 export type State = {
 	questionFlow: Record<string, string | number>;
 	questionFlowSequence: string[];
-	inView: string;
+	inView: {
+		index: number;
+		key: string;
+	};
+	showDialog: boolean;
 };
 
 export type Action =
@@ -38,8 +42,19 @@ export type Action =
 			payload: Record<string, string | number>;
 	  }
 	| {
+			type: 'nav';
+			payload: number;
+	  }
+	| {
 			type: 'jump';
 			payload: string;
+	  }
+	| {
+			type: 'reset';
+	  }
+	| {
+			type: 'confirm';
+			payload: boolean;
 	  };
 
 export type ReducerDispatch = Dispatch<Action>;

@@ -18,10 +18,14 @@
 	background: none;
 }
 
-@mixin disabled($color) {
+@mixin disabled($color: false) {
 	cursor: not-allowed;
-	opacity: 0.8;
-	@include outline-btn($color);
+	opacity: 0.4;
+	@if $color {
+		@include outline-btn($color);
+	} @else {
+		box-shadow: none;
+	}
 }
 
 .button {
@@ -31,35 +35,42 @@
 	padding: var(--sp-6) var(--sp-16);
 	border-radius: var(--border-rd);
 	font-weight: 600;
+	white-space: nowrap;
 	&___large {
 		padding: var(--sp-16) var(--sp-24);
 	}
 	&___solid {
 		@include solid-btn(var(--btn-color));
+		&[aria-disabled='true'] {
+			@include disabled(var(--btn-color));
+		}
 	}
 	&___outline {
 		@include outline-btn(var(--btn-color));
+		&[aria-disabled='true'] {
+			@include disabled(var(--btn-color));
+		}
 	}
 	&___ghost {
 		@include ghost-btn(var(--btn-color));
-	}
-	&___disabled {
-		@include disabled(var(--btn-color));
+		&[aria-disabled='true'] {
+			@include disabled;
+		}
 	}
 	&___loading {
 		cursor: not-allowed;
-		opacity: 0.8;
+		filter: brightness(0.9);
 	}
 	&___primary {
 		@include solid-btn(var(--primary-500));
 		&.button___outline {
 			@include outline-btn(var(--primary-500));
 		}
+		&[aria-disabled='true']:not(.button___ghost) {
+			@include disabled(var(--primary-500));
+		}
 		&.button___ghost {
 			@include ghost-btn(var(--primary-500));
-		}
-		&.button___disabled {
-			@include disabled(var(--primary-500));
 		}
 	}
 	&___secondary {
@@ -67,11 +78,18 @@
 		&.button___outline {
 			@include outline-btn(var(--grey-600));
 		}
+		&[aria-disabled='true']:not(.button___ghost) {
+			@include disabled(var(--grey-600));
+		}
 		&.button___ghost {
 			@include ghost-btn(var(--grey-600));
 		}
-		&.button___disabled {
-			@include disabled(var(--grey-600));
-		}
+	}
+	&__icon {
+		display: flex;
+		align-items: center;
+		flex: 1 0 20px;
+		align-self: stretch;
+		margin-left: 10px;
 	}
 }
