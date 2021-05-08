@@ -1,5 +1,5 @@
 //#region imports
-import { FormEvent, useRef, useLayoutEffect, useMemo } from 'react';
+import { FormEvent, useRef, useMemo } from 'react';
 import cx from 'classnames';
 
 import { Question, ResponsesTypeEnum, ReducerDispatch } from './types';
@@ -40,6 +40,7 @@ function PagedFormQuestion({
 	isInView,
 	isSubmitting,
 	isReadonly,
+	...rest
 }: Props) {
 	const sectionRef = useRef<HTMLElement>(null);
 	const shouldEnableForm = useMemo(
@@ -69,23 +70,13 @@ function PagedFormQuestion({
 		shouldEnableForm && onSubmit();
 	};
 
-	useLayoutEffect(() => {
-		// Scroll next question into view
-		isInView &&
-			sectionRef.current &&
-			sectionRef.current.scrollIntoView({
-				behavior: 'smooth',
-				block: 'start',
-				inline: 'nearest',
-			});
-	}, [isInView]);
-
 	return questionData ? (
 		<section
 			ref={sectionRef}
 			className={cx(css.pagedForm, {
 				[css.pagedForm__active]: isInView,
 			})}
+			{...rest}
 		>
 			<form
 				onSubmit={handleFormSubmit}
