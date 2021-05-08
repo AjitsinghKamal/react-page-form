@@ -89,6 +89,7 @@ function PagedFormQuestion({
 						name={questionData.key}
 						fields={questionData.choices || []}
 						onChange={onChange}
+						checked={[String(response)]}
 						singleSelect={
 							questionData.responseType ===
 							ResponsesTypeEnum.SINGLE_CHOICE
@@ -99,6 +100,7 @@ function PagedFormQuestion({
 						placeholder={questionData.placeholder || ''}
 						name={questionData.key}
 						onChange={onTextInputChange}
+						value={response}
 						type={
 							questionData.responseType === ResponsesTypeEnum.NUM
 								? 'number'

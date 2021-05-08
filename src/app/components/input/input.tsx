@@ -1,11 +1,5 @@
 //#region imports
-import {
-	ReactNode,
-	FormEvent,
-	useState,
-	useEffect,
-	HTMLAttributes,
-} from 'react';
+import { ReactNode, FormEvent, useState, useEffect } from 'react';
 import cx from 'classnames';
 import css from './input.module.scss';
 //#endregion
@@ -13,8 +7,8 @@ import css from './input.module.scss';
 export type Props = {
 	name: string;
 	placeholder: string;
-	value?: string;
-	defaultValue?: string;
+	value?: string | number;
+	defaultValue?: string | number;
 	label?: ReactNode;
 	error?: ReactNode | boolean;
 	type?: string;
@@ -32,7 +26,7 @@ function Input({
 	type = 'text',
 	...restHtmlAttributes
 }: Props) {
-	const [state, setState] = useState('');
+	const [state, setState] = useState<string | number>();
 
 	const _onChangeHandler = (e: FormEvent<HTMLInputElement>) => {
 		const { value: updatedValue } = e.currentTarget;

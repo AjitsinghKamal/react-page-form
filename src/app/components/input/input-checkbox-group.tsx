@@ -19,7 +19,7 @@ export type Props = {
 	fields: (string | CheckboxField)[];
 	singleSelect?: boolean;
 	direction?: 'row' | 'column';
-	checked?: boolean[] | CheckboxField[];
+	checked?: (string | boolean)[];
 	prefixLabel?: boolean;
 	onChange?: ({
 		state,
@@ -43,6 +43,7 @@ function InputCheckboxGroup({
 	fields,
 	prefixLabel,
 	onChange,
+	checked,
 	singleSelect,
 	direction = 'column',
 }: Props) {
@@ -52,9 +53,11 @@ function InputCheckboxGroup({
 		const initialState: GroupState = fields.reduce<GroupState>(
 			(acc, field: string | CheckboxField, index) => {
 				if (isCheckboxField(field)) {
-					acc[field.key] = !!field.value;
+					acc[field.key] = checked
+						? checked.includes(field.key)
+						: !!field.value;
 				} else {
-					acc[index] = false;
+					acc[index] = checked ? !!checked[index] : false;
 				}
 				return acc;
 			},
