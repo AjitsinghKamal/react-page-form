@@ -13,7 +13,7 @@ type Props = {
 };
 function Recommendations({ loading, list, onReset }: Props) {
 	return (
-		<section className={cx('flex', css.recommendation)}>
+		<section className={cx('flex', 'px-12', css.recommendation)}>
 			{loading ? (
 				<div
 					data-testid="rec-loader"
@@ -29,7 +29,9 @@ function Recommendations({ loading, list, onReset }: Props) {
 				</div>
 			) : (
 				<div>
-					<h2>We got your recommendations</h2>
+					<h2 className={css.recommendation_title}>
+						We got your recommendations
+					</h2>
 					<p className="my-10">
 						Based on your answers, this is what makes sense for you
 						and what you should pay.

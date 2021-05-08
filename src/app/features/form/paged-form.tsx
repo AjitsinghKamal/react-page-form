@@ -158,7 +158,7 @@ function PagedForm({
 	isSubmitting,
 	onFormSubmit,
 	title,
-	contentWidth = '50%',
+	contentWidth = '600px',
 	errors,
 }: Props) {
 	const [state, dispatch] = useReducer(FormReducer, initialState);

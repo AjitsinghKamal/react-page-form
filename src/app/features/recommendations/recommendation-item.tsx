@@ -14,9 +14,8 @@ function RecommendationItem({ data }: Props) {
 			data-testid="rec-item"
 			className={cx('my-12', 'px-16', 'py-12', css.item)}
 		>
-			<div className={css.item_type}>
-				<span>{data.type}</span>
-			</div>
+			<span className={css.item_type}>{data.type}</span>
+
 			<div>
 				<span className={css.item_amount}>{data.price.amount}</span>
 				<span className={cx('mx-8', css.item_duration)}>

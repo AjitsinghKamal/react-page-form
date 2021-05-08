@@ -73,6 +73,10 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 			const { jwt } = await PostChallenge(
 				preparePayloadForToken(allResponses)
 			);
+			dispatchToken({
+				type: 'update',
+				payload: { response: jwt },
+			});
 			fetchRecommendations(jwt);
 		} catch (e) {
 			dispatchToken({
