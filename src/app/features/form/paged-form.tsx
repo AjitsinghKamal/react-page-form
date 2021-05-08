@@ -7,6 +7,7 @@ import {
 	useCallback,
 	useReducer,
 	CSSProperties,
+	ReactNode,
 } from 'react';
 import cx from 'classnames';
 
@@ -34,7 +35,7 @@ type Props = {
 	/**
 	 * Adds a sticky title heading to form
 	 */
-	title?: string;
+	title?: ReactNode;
 	/**
 	 * Adjusts content width
 	 * accepts either percentage or px value
@@ -216,9 +217,15 @@ function PagedForm({
 	const enablePreviousNav = useMemo(() => state.inView.index > 0, [
 		state.inView.index,
 	]);
+
 	const enableNextNav = useMemo(
 		() => state.inView.index < state.questionFlowSequence.length - 1,
 		[state.inView.index, state.questionFlowSequence]
+	);
+
+	const answeredCount = useMemo(
+		() => Object.values(state.questionFlow).filter((res) => res).length,
+		[JSON.stringify(state.questionFlow)]
 	);
 	/**
 	 * set up next form question as per the `next` key
@@ -269,6 +276,7 @@ function PagedForm({
 			payload: 'next',
 		});
 	}, []);
+
 	const onUpClick = useCallback(() => {
 		dispatch({
 			type: 'nav',
@@ -388,7 +396,10 @@ function PagedForm({
 			}
 		>
 			<header className={cx('px-12 py-16', css.paged_header)}>
-				<h1 className="ft-18">{title}</h1>
+				<h1 className="ft-18 flex">{title}</h1>
+				<span
+					className={cx('ft-14', css.paged_header_count)}
+				>{`${answeredCount} of ${questions.length} Answered`}</span>
 			</header>
 
 			<div className={cx(css.paged)} ref={quesRef}>
@@ -442,8 +453,8 @@ function PagedForm({
 					variant="ghost"
 					secondary
 					onClick={onDownClick}
+					className="ft-14 mr-auto"
 					disabled={!enableNextNav}
-					className="ft-14"
 				>
 					Next
 					<Arrow
@@ -452,14 +463,11 @@ function PagedForm({
 						width={15}
 					/>
 				</Button>
-				<Button
-					variant="ghost"
-					secondary
-					className="ml-auto"
-					onClick={onResetClick}
-				>
-					Reset
-				</Button>
+				{answeredCount ? (
+					<Button variant="ghost" secondary onClick={onResetClick}>
+						Reset
+					</Button>
+				) : null}
 			</footer>
 		</div>
 	);

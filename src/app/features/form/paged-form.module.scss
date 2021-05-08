@@ -25,6 +25,10 @@
 		z-index: 1;
 		background: var(--blue-200);
 		box-shadow: 0 10px 30px 10px var(--blue-200);
+		&_count {
+			opacity: 0.6;
+			font-weight: 600;
+		}
 	}
 	&_footer {
 		bottom: 0;

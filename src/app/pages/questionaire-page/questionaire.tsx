@@ -14,6 +14,7 @@ import { GetRecommendation, PostChallenge } from 'app/apis/challenge';
 
 import { FORM_QUESTIONS } from './constants';
 import css from './questionaire.module.scss';
+import { ReactComponent as Search } from 'src/assets/illustrations/search.svg';
 
 //#endregion
 
@@ -122,7 +123,14 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 					/>
 				) : (
 					<PagedForm
-						title="Find my Plan"
+						title={
+							<>
+								<Search
+									className={css.questionaire_title_icon}
+								/>
+								Find my Plan
+							</>
+						}
 						persistData="ques_1"
 						questions={formQuestions}
 						onFormSubmit={submitQuestionaire}

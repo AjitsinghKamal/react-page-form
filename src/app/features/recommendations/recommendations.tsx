@@ -5,6 +5,8 @@ import RecommendationItem from './recommendation-item';
 import { Button } from 'app/components';
 import css from './recommendations.module.scss';
 import { ReactComponent as Loader } from 'src/assets/svgs/pulse.svg';
+import { ReactComponent as Success } from 'src/assets/illustrations/success.svg';
+
 //#endregion
 type Props = {
 	loading?: boolean;
@@ -30,7 +32,8 @@ function Recommendations({ loading, list, onReset }: Props) {
 			) : (
 				<div>
 					<h2 className={css.recommendation_title}>
-						We got your recommendations
+						<Success className={css.recommendation_title_icon} /> We
+						got your recommendations
 					</h2>
 					<p className="my-10">
 						Based on your answers, this is what makes sense for you
@@ -41,7 +44,7 @@ function Recommendations({ loading, list, onReset }: Props) {
 							<RecommendationItem data={data} key={index} />
 						))}
 					</ul>
-					<Button className="my-18" onClick={onReset}>
+					<Button className="my-18" onClick={onReset} size="large">
 						Restart Evaluation
 					</Button>
 				</div>

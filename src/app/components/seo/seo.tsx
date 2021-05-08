@@ -32,7 +32,7 @@ function Seo({
 	prefixTitleWithEnv = true,
 }: PropsWithChildren<Props>) {
 	const pageTitle = useMemo(() => {
-		return `${prefixTitleWithEnv && IS_DEV && 'Dev | '}${
+		return `${prefixTitleWithEnv && IS_DEV ? 'Dev | ' : ''}${
 			title || APP_TITLE
 		}`;
 	}, []);
