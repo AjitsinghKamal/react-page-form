@@ -41,36 +41,6 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 		),
 	});
 
-	const submitQuestionaire = async (
-		allResponses: PagedFormState['questionFlow']
-	) => {
-		try {
-			dispatchToken({
-				type: 'fetch',
-			});
-			let jwtToken = challengeToken.response;
-			if (!jwtToken) {
-				const { jwt: jwtToken } = await PostChallenge(
-					preparePayloadForToken(allResponses)
-				);
-				dispatchToken({
-					type: 'update',
-					payload: {
-						response: jwtToken,
-					},
-				});
-			}
-			fetchRecommendations(jwtToken);
-		} catch (e) {
-			dispatchRecom({
-				type: 'update',
-				payload: {
-					error: e,
-				},
-			});
-		}
-	};
-
 	const fetchRecommendations = async (token: string) => {
 		try {
 			dispatchRecom({
@@ -92,6 +62,24 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 			});
 		}
 	};
+	const submitQuestionaire = async (
+		allResponses: PagedFormState['questionFlow']
+	) => {
+		try {
+			dispatchToken({
+				type: 'fetch',
+			});
+			const { jwt } = await PostChallenge(
+				preparePayloadForToken(allResponses)
+			);
+			fetchRecommendations(jwt);
+		} catch (e) {
+			dispatchToken({
+				type: 'update',
+				payload: { error: e.response.errors },
+			});
+		}
+	};
 
 	return (
 		<>
@@ -108,6 +96,7 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 						title="Find my Plan"
 						questions={formQuestions}
 						onFormSubmit={submitQuestionaire}
+						errors={challengeToken.error}
 						isSubmitting={challengeToken.status === 'WAITING'}
 					/>
 				)}

@@ -9,7 +9,7 @@ class HttpError {
 	}
 }
 
-export default function Http(
+export default async function Http(
 	url: string,
 	{
 		method = 'GET',
@@ -41,11 +41,11 @@ export default function Http(
 	if (body) {
 		_options.body = JSON.stringify(body);
 	}
-	return fetch(`${url}${params}`, _options).then((response) => {
-		if (response.ok) {
-			return response.json();
-		} else {
-			throw new HttpError(response.status, response.json());
-		}
-	});
+	const data = await fetch(`${url}${params}`, _options);
+	const response = await data.json();
+	if (data.ok) {
+		return response;
+	} else {
+		throw new HttpError(data.status, response);
+	}
 }

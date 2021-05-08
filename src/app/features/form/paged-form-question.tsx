@@ -23,6 +23,7 @@ type Props = {
 	isInView?: boolean;
 	isSubmitting?: boolean;
 	isReadonly?: boolean;
+	hasError?: string;
 };
 
 function isChoiceType(choice: ResponsesTypeEnum): boolean {
@@ -40,6 +41,7 @@ function PagedFormQuestion({
 	isInView,
 	isSubmitting,
 	isReadonly,
+	hasError,
 	...rest
 }: Props) {
 	const sectionRef = useRef<HTMLElement>(null);
@@ -108,6 +110,7 @@ function PagedFormQuestion({
 								? 'number'
 								: 'text'
 						}
+						error={hasError}
 					/>
 				)}
 				<Button

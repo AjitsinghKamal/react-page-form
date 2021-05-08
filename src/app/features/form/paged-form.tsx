@@ -44,6 +44,7 @@ type Props = {
 	 * callback for end form submit
 	 */
 	onFormSubmit: (T: State['questionFlow']) => void;
+	errors: RequestError;
 };
 
 function isKey(next: Question['next']): next is string {
@@ -158,6 +159,7 @@ function PagedForm({
 	onFormSubmit,
 	title,
 	contentWidth = '50%',
+	errors,
 }: Props) {
 	const [state, dispatch] = useReducer(FormReducer, initialState);
 	const quesRef = useRef<HTMLDivElement>(null);
@@ -355,6 +357,7 @@ function PagedForm({
 						data-view={
 							data === state.inView.key ? 'active' : 'past'
 						}
+						hasError={errors && errors[data] && errors[data][0]}
 					/>
 				))}
 			</div>

@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useMemo } from 'react';
 
 type HttpRequestState = {
 	response: any;
@@ -21,7 +21,7 @@ type Action =
 	  }
 	| {
 			type: 'error';
-			payload: any;
+			payload: RequestError;
 	  }
 	| {
 			type: 'response';
@@ -57,10 +57,13 @@ function Reducer(state: HttpRequestState, action: Action): HttpRequestState {
 const useHttpState = () => {
 	const [responseState, dispatch] = useReducer(Reducer, initialState);
 
-	return {
-		dispatch,
-		responseState,
-	};
+	return useMemo(
+		() => ({
+			dispatch,
+			responseState,
+		}),
+		[responseState.status]
+	);
 };
 
 export default useHttpState;
