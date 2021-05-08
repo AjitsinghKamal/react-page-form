@@ -12,7 +12,7 @@ import {
 import { useHttpState } from 'app/hooks';
 import { GetRecommendation, PostChallenge } from 'app/apis/challenge';
 
-import { FORM_QUESTIONS } from './constants';
+import { FORM_QUESTIONS, PERSIST_KEY } from './constants';
 import css from './questionaire.module.scss';
 import { ReactComponent as Search } from 'src/assets/illustrations/search.svg';
 
@@ -55,6 +55,7 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 					response: data,
 				},
 			});
+			localStorage.removeItem(PERSIST_KEY);
 		} catch (e) {
 			dispatchRecom({
 				type: 'update',
@@ -91,6 +92,7 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 	 * Exit recommendations and start a fresh new form
 	 */
 	const shouldRestartForm = useCallback(() => {
+		localStorage.removeItem(PERSIST_KEY);
 		dispatchRecom({
 			type: 'reset',
 		});
@@ -131,7 +133,7 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 								Find my Plan
 							</>
 						}
-						persistData="ques_1"
+						persistData={PERSIST_KEY}
 						questions={formQuestions}
 						onFormSubmit={submitQuestionaire}
 						onFormReset={shouldResetForm}

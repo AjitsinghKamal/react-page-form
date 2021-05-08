@@ -45,3 +45,5 @@ export const FORM_QUESTIONS: Question[] = [
 		placeholder: `i.e jane.doe@provider.com`,
 	},
 ];
+
+export const PERSIST_KEY = 'persist:ques';
