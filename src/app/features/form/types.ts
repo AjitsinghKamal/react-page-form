@@ -33,17 +33,18 @@ export type State = {
 
 export type Action =
 	| {
-			type: 'append';
-			key: string;
-			payload: Record<string, string | number>;
+			type: 'append' | 'reflow';
+			payload: string;
 	  }
 	| {
 			type: 'update';
-			payload: Record<string, string | number>;
+			key: string;
+			value: string | number;
+			canReflow?: boolean;
 	  }
 	| {
 			type: 'nav';
-			payload: number;
+			payload: 'next' | 'prev' | number;
 	  }
 	| {
 			type: 'jump';

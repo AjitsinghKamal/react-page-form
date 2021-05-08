@@ -65,47 +65,83 @@ function FormReducer(state: State, action: Action): State {
 	switch (action.type) {
 		case 'append': {
 			// add new question and update inView
-			const updateSeq = [...state.questionFlowSequence, action.key];
+			const updateSeq = [...state.questionFlowSequence, action.payload];
 			return {
 				...state,
-				questionFlow: { ...state.questionFlow, ...action.payload },
+				questionFlow: { ...state.questionFlow, [action.payload]: '' },
 				questionFlowSequence: updateSeq,
 				inView: {
+					key: action.payload,
 					index: updateSeq.length - 1,
-					key: action.key,
 				},
 			};
 		}
-		case 'update': // just update a question's responses
+		case 'update': {
+			// just update a question's responses
+			const newState = { ...state };
+			if (
+				action.canReflow &&
+				newState.questionFlowSequence[
+					newState.questionFlowSequence.length - 1
+				] !== action.key
+			) {
+				newState.questionFlowSequence = newState.questionFlowSequence.slice(
+					0,
+					state.inView.index + 1
+				);
+				newState.questionFlow = newState.questionFlowSequence.reduce(
+					(acc: State['questionFlow'], key) => {
+						acc[key] = newState.questionFlow[key];
+						return acc;
+					},
+					{}
+				);
+			}
 			return {
-				...state,
-				questionFlow: { ...state.questionFlow, ...action.payload },
+				...newState,
+				questionFlow: {
+					...state.questionFlow,
+					[action.key]: action.value,
+				},
 			};
+		}
 		case 'jump': {
 			// allow jumping to question on basis of key
 			const jumpPosition = state.questionFlowSequence.findIndex(
 				(key: string) => action.payload === key
 			);
-			if (jumpPosition) {
-				return {
-					...state,
-					inView: {
-						index: jumpPosition,
-						key: action.payload,
-					},
-				};
-			} else {
-				return state;
-			}
+			return jumpPosition
+				? {
+						...state,
+						inView: {
+							index: jumpPosition,
+							key: action.payload,
+						},
+				  }
+				: state;
 		}
-		case 'nav': // allow navigation to question on basis of order
-			return {
-				...state,
-				inView: {
-					index: action.payload,
-					key: state.questionFlowSequence[action.payload],
-				},
-			};
+		case 'nav': {
+			// allow navigation to question on basis of order
+			let index = -1;
+			if (action.payload === 'next' || action.payload === 'prev') {
+				index =
+					action.payload === 'next'
+						? state.inView.index + 1
+						: state.inView.index - 1;
+			} else {
+				index = action.payload;
+			}
+			const key = state.questionFlowSequence[index] || '';
+			return key
+				? {
+						...state,
+						inView: {
+							index,
+							key,
+						},
+				  }
+				: state;
+		}
 		case 'reset':
 			return { ...initialState };
 		case 'confirm':
@@ -169,14 +205,19 @@ function PagedForm({
 						? currentQues.next(state.questionFlow[state.inView.key])
 						: ''
 			  );
-		data &&
+		if (!data) {
+			return;
+		} else if (!state.questionFlowSequence.includes(data.key)) {
 			dispatch({
 				type: 'append',
-				key: data.key,
-				payload: {
-					[data.key]: '',
-				},
+				payload: data.key,
 			});
+		} else {
+			dispatch({
+				type: 'nav',
+				payload: 'next',
+			});
+		}
 	};
 
 	/**
@@ -237,7 +278,7 @@ function PagedForm({
 				// view even after 10% intersection.
 				// So, only one threshold point is enough
 				const inViewQuestionPosition = entry.target.getAttribute(
-					'order'
+					'data-order'
 				);
 				inViewQuestionPosition &&
 					dispatch({
@@ -261,10 +302,7 @@ function PagedForm({
 		if (state.inView.index < 0) {
 			dispatch({
 				type: 'append',
-				key: questions[0].key,
-				payload: {
-					[questions[0].key]: '',
-				},
+				payload: questions[0].key,
 			});
 		}
 	}, [state.inView.index]);

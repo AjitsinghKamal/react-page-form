@@ -52,17 +52,17 @@ function PagedFormQuestion({
 	const onChange: CheckboxGroupProp['onChange'] = ({ change, groupName }) => {
 		dispatch({
 			type: 'update',
-			payload: {
-				[groupName]: change.name,
-			},
+			key: groupName,
+			value: change.name,
+			canReflow: typeof questionData?.next !== 'string',
 		});
 	};
 	const onTextInputChange: InputProps['onChange'] = ({ name, value }) => {
 		dispatch({
 			type: 'update',
-			payload: {
-				[name]: value,
-			},
+			key: name,
+			value,
+			canReflow: typeof questionData?.next !== 'string',
 		});
 	};
 	const handleFormSubmit = (e: FormEvent<HTMLFormElement>) => {
