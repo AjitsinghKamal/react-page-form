@@ -2,15 +2,16 @@
 import cx from 'classnames';
 import { RecommendationsResponse } from 'app/apis/challenge';
 import RecommendationItem from './recommendation-item';
-
+import { Button } from 'app/components';
 import css from './recommendations.module.scss';
 import { ReactComponent as Loader } from 'src/assets/svgs/pulse.svg';
 //#endregion
 type Props = {
 	loading?: boolean;
 	list: RecommendationsResponse[];
+	onReset?: () => void;
 };
-function Recommendations({ loading, list }: Props) {
+function Recommendations({ loading, list, onReset }: Props) {
 	return (
 		<section className={cx('flex', css.recommendation)}>
 			{loading ? (
@@ -38,6 +39,9 @@ function Recommendations({ loading, list }: Props) {
 							<RecommendationItem data={data} key={index} />
 						))}
 					</ul>
+					<Button className="my-18" onClick={onReset}>
+						Restart Evaluation
+					</Button>
 				</div>
 			)}
 		</section>

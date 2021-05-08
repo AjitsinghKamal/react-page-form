@@ -28,7 +28,7 @@ type Action =
 			payload: any;
 	  }
 	| {
-			type: 'fetch';
+			type: 'fetch' | 'reset';
 	  };
 
 const initialState = {
@@ -50,6 +50,8 @@ function Reducer(state: HttpRequestState, action: Action): HttpRequestState {
 		}
 		case 'fetch':
 			return { ...state, status: 'WAITING' };
+		case 'reset':
+			return { ...initialState };
 		default:
 			return state;
 	}

@@ -1,4 +1,5 @@
 //#region imports
+import { useCallback } from 'react';
 import cx from 'classnames';
 
 import { Seo } from 'app/components';
@@ -81,6 +82,12 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 		}
 	};
 
+	const shouldRestartForm = useCallback(() => {
+		dispatchRecom({
+			type: 'reset',
+		});
+	}, []);
+
 	return (
 		<>
 			<Seo />
@@ -90,6 +97,7 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 					<Recommendations
 						list={recommendations.response}
 						loading={recommendations.status === 'WAITING'}
+						onReset={shouldRestartForm}
 					/>
 				) : (
 					<PagedForm

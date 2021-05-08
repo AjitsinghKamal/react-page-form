@@ -44,7 +44,7 @@ type Props = {
 	 * callback for end form submit
 	 */
 	onFormSubmit: (T: State['questionFlow']) => void;
-	errors: RequestError;
+	errors?: RequestError;
 };
 
 function isKey(next: Question['next']): next is string {
