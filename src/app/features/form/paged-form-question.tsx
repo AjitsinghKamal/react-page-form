@@ -73,13 +73,7 @@ function PagedFormQuestion({
 	};
 
 	return questionData ? (
-		<section
-			ref={sectionRef}
-			className={cx(css.pagedForm, {
-				[css.pagedForm__active]: isInView,
-			})}
-			{...rest}
-		>
+		<section ref={sectionRef} className={css.pagedForm} {...rest}>
 			<form
 				onSubmit={handleFormSubmit}
 				className={cx('px-12', css.pagedForm_form)}

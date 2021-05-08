@@ -2,6 +2,7 @@
 	display: inline-block;
 	width: 100%;
 	margin-bottom: var(--sp-16);
+	position: relative;
 	&_field {
 		width: 100%;
 		display: block;
@@ -36,5 +37,8 @@
 	&_error {
 		font-size: var(--ft-12);
 		color: var(--red-500);
+		position: absolute;
+		font-weight: 600;
+		transform: translateY(25%);
 	}
 }

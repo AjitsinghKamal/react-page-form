@@ -15,7 +15,7 @@ import PagedFormQuestion from './paged-form-question';
 import { Button, Modal } from 'app/components';
 
 import css from './paged-form.module.scss';
-// import { ReactComponent as Arrow } from 'src/assets/svgs/arrow.svg';
+import { ReactComponent as Arrow } from 'src/assets/svgs/arrow.svg';
 
 //#endregion
 
@@ -234,15 +234,19 @@ function PagedForm({
 		current.next ? presentNext(current) : onFormSubmit(state.questionFlow);
 	};
 
-	// const onNavButtonClick = (navTo: number) => {
-	// 	dispatch({
-	// 		type: 'nav',
-	// 		payload: state.inView.index + navTo,
-	// 	});
-	// };
+	const onDownClick = useCallback(() => {
+		dispatch({
+			type: 'nav',
+			payload: 'next',
+		});
+	}, []);
+	const onUpClick = useCallback(() => {
+		dispatch({
+			type: 'nav',
+			payload: 'prev',
+		});
+	}, []);
 
-	// const onDownClick = useCallback(() => onNavButtonClick(1), []);
-	// const onUpClick = useCallback(() => onNavButtonClick(-1), []);
 	const onResetClick = useCallback(() => {
 		dispatch({
 			type: 'confirm',
@@ -311,6 +315,17 @@ function PagedForm({
 
 	useLayoutEffect(() => {
 		const children = quesRef.current?.children || [];
+		const targetElement = children[state.inView.index];
+		targetElement &&
+			targetElement.scrollIntoView({
+				behavior: 'smooth',
+				block: 'start',
+				inline: 'nearest',
+			});
+	}, [state.inView.index]);
+
+	useLayoutEffect(() => {
+		const children = quesRef.current?.children || [];
 		const newElement = children[children.length - 1];
 		if (newElement) {
 			observerRef.current?.observe(newElement);
@@ -375,6 +390,34 @@ function PagedForm({
 				</p>
 			</Modal>
 			<footer className={cx('py-16 px-12', css.paged_footer)}>
+				<Button
+					variant="ghost"
+					secondary
+					onClick={onUpClick}
+					className="ft-14"
+					disabled={!enablePreviousNav}
+				>
+					Prev
+					<Arrow
+						className="mx-6 rotate___up"
+						height={15}
+						width={15}
+					/>
+				</Button>
+				<Button
+					variant="ghost"
+					secondary
+					onClick={onDownClick}
+					disabled={!enableNextNav}
+					className="ft-14"
+				>
+					Next
+					<Arrow
+						className="mx-6 rotate___down"
+						height={15}
+						width={15}
+					/>
+				</Button>
 				<Button
 					variant="ghost"
 					secondary

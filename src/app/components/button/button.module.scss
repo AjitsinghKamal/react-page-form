@@ -1,7 +1,7 @@
 @mixin solid-btn($fill) {
 	background: $fill;
 	color: #fff;
-	transition: filter 0.3s;
+
 	&:hover {
 		filter: brightness(0.9);
 	}
@@ -36,6 +36,7 @@
 	border-radius: var(--border-rd);
 	font-weight: 600;
 	white-space: nowrap;
+	transition: filter 0.3s, opacity 0.3s, color 0.3s, background 0.3s;
 	&___large {
 		padding: var(--sp-16) var(--sp-24);
 	}
