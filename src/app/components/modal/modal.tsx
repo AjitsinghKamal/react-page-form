@@ -1,27 +1,35 @@
 //#region imports
-import {
-	ReactNode,
-	FormEvent,
-	useState,
-	useEffect,
-	HTMLAttributes,
-	PropsWithChildren,
-} from 'react';
-import cx from 'classnames';
-import css from './input.module.scss';
-import Button from './../button/button';
+import { PropsWithChildren } from 'react';
+
 import Backdrop from './modal-backdrop';
 import Dialog, { Props as DialogProps } from './modal-dialog';
 import { Portal } from 'app/components';
-import { ReactComponent as Close } from 'src/assets/svgs/pulse.svg';
 
 //#endregion
 
 export type Props = {
+	/**
+	 * show or hide the modal
+	 */
 	isVisible: boolean;
+	/**
+	 * if provide, will append the modal as child of this Element
+	 * By default modal is appended in document root
+	 */
 	container?: string;
+	/**
+	 * Modal can render dialog or drawer
+	 *
+	 * TODO: add support for drawer
+	 */
 	type?: 'Dialog';
+	/**
+	 * whether modal should be closed on click on backdrop
+	 */
 	closeOnBackdropClick?: boolean;
+	/**
+	 * hide translucent backdrop
+	 */
 	noBackdrop?: boolean;
 } & DialogProps;
 

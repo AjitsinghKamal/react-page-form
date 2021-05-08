@@ -2,6 +2,9 @@ import { PropsWithChildren, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 
 type Props = {
+	/**
+	 * append portal to the Element with this id
+	 */
 	containerId?: string;
 };
 function Portal({ containerId, children }: PropsWithChildren<Props>) {

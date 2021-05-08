@@ -8,8 +8,17 @@ import { ReactComponent as Close } from 'src/assets/svgs/cross.svg';
 //#endregion
 
 export type Props = {
+	/**
+	 * Button title for cancel
+	 */
 	cancelText?: string;
+	/**
+	 * Button title for confirm
+	 */
 	okText?: string;
+	/**
+	 * renders header for dialog
+	 */
 	title?: ReactNode;
 	onOk?: () => void;
 	onClose?: () => void;
