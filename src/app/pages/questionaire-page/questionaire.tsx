@@ -86,8 +86,25 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 		}
 	};
 
+	/**
+	 * Exit recommendations and start a fresh new form
+	 */
 	const shouldRestartForm = useCallback(() => {
 		dispatchRecom({
+			type: 'reset',
+		});
+		dispatchToken({
+			type: 'reset',
+		});
+	}, []);
+
+	/**
+	 * clear all form errors
+	 *
+	 * required if form is cleared
+	 */
+	const shouldResetForm = useCallback(() => {
+		dispatchToken({
 			type: 'reset',
 		});
 	}, []);
@@ -108,6 +125,7 @@ function Questionaire({ formQuestions = FORM_QUESTIONS }: Props) {
 						title="Find my Plan"
 						questions={formQuestions}
 						onFormSubmit={submitQuestionaire}
+						onFormReset={shouldResetForm}
 						errors={challengeToken.error}
 						isSubmitting={challengeToken.status === 'WAITING'}
 					/>

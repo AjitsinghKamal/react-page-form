@@ -44,6 +44,7 @@ type Props = {
 	 * callback for end form submit
 	 */
 	onFormSubmit: (T: State['questionFlow']) => void;
+	onFormReset?: () => void;
 	errors?: RequestError;
 };
 
@@ -156,10 +157,11 @@ function FormReducer(state: State, action: Action): State {
 function PagedForm({
 	questions,
 	isSubmitting,
-	onFormSubmit,
 	title,
-	contentWidth = '600px',
 	errors,
+	onFormSubmit,
+	onFormReset,
+	contentWidth = '600px',
 }: Props) {
 	const [state, dispatch] = useReducer(FormReducer, initialState);
 	const quesRef = useRef<HTMLDivElement>(null);
@@ -267,6 +269,7 @@ function PagedForm({
 		});
 		observerRef.current?.disconnect();
 		setupObserver();
+		onFormReset && onFormReset();
 	}, []);
 
 	/**
