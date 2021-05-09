@@ -25,3 +25,12 @@
 	padding-left: 32px;
 	padding-right: 32px;
 }
+
+.loader___centered {
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
